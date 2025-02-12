@@ -12,16 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-		
+
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/atori.pem
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/atori.pem
           chmod 600 ~/.ssh/atori.pem
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/atori.pem ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/atori.pem ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/fastapi-book-project
             git pull origin main
             source venv/bin/activate
