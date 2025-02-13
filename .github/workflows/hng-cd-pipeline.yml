@@ -23,6 +23,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/atori.pem ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/fastapi-book-project
+            sudo systemctl stop fastapi
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
